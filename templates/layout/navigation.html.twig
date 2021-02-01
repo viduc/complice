@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="../" class="navbar-brand">Complice</a>
+        </div>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--div class="collapse navbar-collapse" id="navbarResponsive"-->
+            <ul class="nav navbar-nav collapse navbar-collapse">
+                <!--li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
+                    <div class="dropdown-menu" aria-labelledby="themes">
+                        <a class="dropdown-item" href="../default/">Default</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../cerulean/">Cerulean</a>
+                        <a class="dropdown-item" href="../cosmo/">Cosmo</a>
+                        <a class="dropdown-item" href="../cyborg/">Cyborg</a>
+                        <a class="dropdown-item" href="../darkly/">Darkly</a>
+                        <a class="dropdown-item" href="../flatly/">Flatly</a>
+                        <a class="dropdown-item" href="../journal/">Journal</a>
+                        <a class="dropdown-item" href="../litera/">Litera</a>
+                        <a class="dropdown-item" href="../lumen/">Lumen</a>
+                        <a class="dropdown-item" href="../lux/">Lux</a>
+                        <a class="dropdown-item" href="../materia/">Materia</a>
+                        <a class="dropdown-item" href="../minty/">Minty</a>
+                        <a class="dropdown-item" href="../pulse/">Pulse</a>
+                        <a class="dropdown-item" href="../sandstone/">Sandstone</a>
+                        <a class="dropdown-item" href="../simplex/">Simplex</a>
+                        <a class="dropdown-item" href="../sketchy/">Sketchy</a>
+                        <a class="dropdown-item" href="../slate/">Slate</a>
+                        <a class="dropdown-item" href="../solar/">Solar</a>
+                        <a class="dropdown-item" href="../spacelab/">Spacelab</a>
+                        <a class="dropdown-item" href="../superhero/">Superhero</a>
+                        <a class="dropdown-item" href="../united/">United</a>
+                        <a class="dropdown-item" href="../yeti/">Yeti</a>
+                    </div>
+                </li-->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('index') }}">Configuration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('index') }}">Partage</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item ">
+                    {% for locale in locales %}
+                        {% if locale != app.request.locale %}
+                            <a class="nav-link my-2 my-sm-0"
+                               href="{{ path('changeLocale', {'locale': locale}) }}"
+                            >{{ locale }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </li>
+                {% if app.user %}
+                <li class="nav-item pt-2">
+                    <a href="{{ path('app_logout') }}" style="color: white">
+                        {% trans %}securite.login.logout{% endtrans %}
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        <!--/div-->
+    </div>
+</nav>
+<div class="container mt-5 pt-4">
+    <div class="page-header" id="banner">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                {% if titre is defined %}
+                    <h2><p class="text-info">{{ titre }}</p></h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

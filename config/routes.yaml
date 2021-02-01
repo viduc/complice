@@ -1,0 +1,10 @@
+security:
+    resource: 'routes/security.yaml'
+
+configuration:
+    resource: 'routes/configuration.yaml'
+    prefix: /configuration
+
+index:
+    path: /index
+    controller: App\Controller\CompliceController::index

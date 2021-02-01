@@ -1,0 +1,9 @@
+securite:
+  titres:
+    login: Connexion
+  login:
+    username: Identifiant
+    password: Mot de passe
+    connexion: Se connecter
+    message: Vous êtes connecté en tant que
+    logout: Déconnexion

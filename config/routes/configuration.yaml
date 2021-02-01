@@ -1,0 +1,3 @@
+changeLocale:
+    path: /changeLocale/{locale}
+    controller: App\Controller\ConfigurationController::changeLocale
