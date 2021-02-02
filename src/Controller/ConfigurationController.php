@@ -36,7 +36,7 @@ class ConfigurationController extends AbstractController implements Configuratio
         $this->filesystem = new Filesystem();
         $this->fichier = $this->kernel->getProjectDir();
         $this->fichier .= '/config/complice.yaml';
-        //$this->creerLeFichier();
+        $this->creerLeFichier();
     }
 
     /**

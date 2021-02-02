@@ -1,3 +1,11 @@
+configuration:
+    path: /
+    controller: App\Controller\InstalleurController::index
+
+pathEnregistrerConfiguration:
+    path: /pathEnregistrerConfiguration
+    controller: App\Controller\InstalleurController::enregistrerConfiguration
+
 changeLocale:
     path: /changeLocale/{locale}
     controller: App\Controller\ConfigurationController::changeLocale

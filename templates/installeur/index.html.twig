@@ -1,0 +1,46 @@
+{% extends 'layout/complice.html.twig' %}
+
+{% block title %}{% trans %}installation.titres{% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="bs-docs-section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h1>{% trans %}installation.titres{% endtrans %}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12" id="mails">
+                <div class="bs-component">
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputTest">
+                            {% trans %}installation.test{% endtrans %}
+                        </label>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control"
+                                       placeholder="cos" id="inputTest"
+                                       value="{{ configuration['test'] }}"
+                                >
+                            </div>
+                            <div class="col-lg-1">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        id="btnTest">
+                                    {% trans %}bouton.valider{% endtrans %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var pathEnregistrerConfiguration = "{{ path('pathEnregistrerConfiguration') }}"
+</script>
+{% endblock %}
