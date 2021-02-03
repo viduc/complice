@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 
-class ControllerSubscriber implements EventSubscriberInterface
+class MenuSubsciber implements EventSubscriberInterface
 {
     /**
      * @var Environment
@@ -36,38 +36,43 @@ class ControllerSubscriber implements EventSubscriberInterface
      */
     final public function onKernelController(ControllerEvent $event) : void
     {
+        $menu = [];
         $controller = $event->getController();
         if (is_array($controller)) {
             $controller = $controller[0];
         }
-
+        $controllerName = $this->filtrerLeNomDuController($controller);
+        switch ($controllerName)
+        {
+            case 'Utilisateur' :
+                $liens = array('utilisateur_liste' => 'Liste');
+                $menu = array('titre' => 'Utilisateur', 'liens' => $liens);
+                break;
+        }
+        $this->twig->addGlobal('menu_gauche',$menu);
         $this->twig->addGlobal(
-            'titre','test'
-            //$this->filtrerLeNomDuController($controller)
+            'titre',
+            $controllerName
         );
     }
 
     /**
-     * @return array|string[]
-     * @codeCoverageIgnore
-     */
-    public static function getSubscribedEvents() : array
-    {
-        return [
-            KernelEvents::CONTROLLER => 'onKernelController',
-        ];
-    }
-
-    /**
      * Filtre le nom du controller
-     * @param AbstractController $controller
+     * @param $controller
      * @return string
      * @codeCoverageIgnore
      */
-    final public function filtrerLeNomDuController(
-        AbstractController $controller
-    ) : string {
+    final public function filtrerLeNomDuController($controller) : string {
         $class = get_class ($controller);
         return str_replace(['App\Controller', 'Controller', '\\'], '', $class);
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function getSubscribedEvents()  : array
+    {
+        return [
+            KernelEvents::CONTROLLER => [['onKernelController', 10]]
+        ];
     }
 }

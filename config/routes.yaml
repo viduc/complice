@@ -5,6 +5,10 @@ configuration:
     resource: 'routes/configuration.yaml'
     prefix: /configuration
 
+utilisateur:
+    resource: 'routes/utilisateur.yaml'
+    prefix: /utilisateur
+
 index:
     path: /index
     controller: App\Controller\CompliceController::index

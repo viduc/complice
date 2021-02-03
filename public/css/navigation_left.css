@@ -1,0 +1,21 @@
+main {
+    margin-bottom: 200%;
+    margin-left: 10px;
+}
+.floating-menu {
+    background: #212529;
+    padding: 5px;;
+    width: 130px;
+    z-index: 100;
+    position: fixed;
+}
+.floating-menu a,
+.floating-menu h3 {
+    font-size: 0.9em;
+    display: block;
+    margin: 0 0.5em;
+    color: #fd7e14;
+}
+.floating-menu h3 {
+    font-size: 1.4em;
+}

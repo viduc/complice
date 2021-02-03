@@ -1,0 +1,16 @@
+{% if menu_gauche is defined %}
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/navigation_left.css') }}"
+        type="text/css"
+        media="screen"
+    />
+    <main>
+        <nav class="floating-menu">
+            <h3>{{ menu_gauche.titre }}</h3>
+            {% for path, label in menu_gauche.liens %}
+                <a href="{{ path(path) }}">{{ label }}</a>
+            {% endfor %}
+        </nav>
+    </main>
+{% endif %}
