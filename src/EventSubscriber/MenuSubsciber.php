@@ -45,7 +45,10 @@ class MenuSubsciber implements EventSubscriberInterface
         switch ($controllerName)
         {
             case 'Utilisateur' :
-                $liens = array('utilisateur_liste' => 'Liste');
+                $liens = array(
+                    'utilisateur_liste' => 'Liste',
+                    'utilisateur_creer' => 'Ajouter'
+                );
                 $menu = array('titre' => 'Utilisateur', 'liens' => $liens);
                 break;
         }

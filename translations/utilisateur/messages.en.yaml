@@ -1,2 +1,9 @@
 utilisateur:
   titres: Users
+  edit:
+    nom: Last Name
+    prenom: First Name
+    civilite: Civilities
+    email: Email
+    roles: Roles
+    save: Save

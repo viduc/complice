@@ -1,2 +1,9 @@
 utilisateur:
   titres: Utilisateurs
+  edit:
+    nom: Nom
+    prenom: Prénom
+    civilite: Civilité
+    email: Email
+    roles : Rôles
+    save: Enregistrer

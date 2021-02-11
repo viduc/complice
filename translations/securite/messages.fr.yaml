@@ -1,9 +1,17 @@
 securite:
   titres:
     login: Connexion
+    motdepasse: Changer votre mot de passe
   login:
     username: Identifiant
     password: Mot de passe
     connexion: Se connecter
     message: Vous êtes connecté en tant que
     logout: Déconnexion
+  password:
+    invalid_message: Les mots de passe doivent être identiques
+    password1: Entrez votre nouveau mot de passe
+    password2: Confirmer votre mot de passe
+    success: Votre mot de passe a bien été modifié
+  token:
+    invalide: "Cette url n'est pas valide"

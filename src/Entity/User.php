@@ -7,6 +7,7 @@
 
 namespace App\Entity;
 
+use App\Exception\CompliceException;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,6 +17,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    public function __construct()
+    {
+        //$this->roles = ['ROLE_USER'];
+    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -54,6 +59,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $roles = [];
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $last_login;
@@ -73,6 +83,79 @@ class User implements UserInterface
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif;
+
+    /**
+     * @return array
+     */
+    final public function getRoles() : array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     * @throws CompliceException
+     */
+    final public function setRoles(array $roles) : void
+    {
+        if (!in_array('ROLE_USER', $roles, true))
+        {
+            $roles[] = 'ROLE_USER';
+        }
+        foreach ($roles as $role)
+        {
+            if(strpos($role, 'ROLE_') === FALSE) {
+                throw new CompliceException(
+                    "Chaque rôle doit commencer par 'ROLE_'",
+                    115
+                );
+            }
+        }
+        $this->roles = $roles;
+    }
+
+    /**
+     * @param string $role
+     */
+    final public function addRole(string $role) : void
+    {
+        /*if (!in_array($role, $this->roles, true))
+        {*/
+            $roles[] = $role;
+        //}
+    }
+
+    /**
+     * @param string $role
+     */
+    final public function removeRole(string $role) : void
+    {
+        if (in_array($role, $this->roles, true))
+        {
+            $key = array_search($role, $this->roles, true);
+            array_slice($this->roles, $key, 1);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * @param mixed $actif
+     */
+    public function setActif($actif): void
+    {
+        $this->actif = $actif;
+    }
 
 
     public function getId(): ?int
@@ -198,11 +281,6 @@ class User implements UserInterface
         $this->token = $token;
 
         return $this;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
     }
 
     public function getSalt()

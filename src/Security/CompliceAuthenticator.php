@@ -12,6 +12,7 @@ use App\Exception\CompliceException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
@@ -32,16 +33,19 @@ class CompliceAuthenticator extends AbstractFormLoginAuthenticator
     private UrlGeneratorInterface $urlGenerator;
     private CsrfTokenManagerInterface $csrfTokenManager;
     private AuthentificationInterface $authentification;
+    private SessionInterface $session;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
-        CsrfTokenManagerInterface $csrfTokenManager
+        CsrfTokenManagerInterface $csrfTokenManager,
+        SessionInterface $session
     ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->authentification = new Authentification();
+        $this->session = $session;
     }
 
     /**
@@ -131,7 +135,9 @@ class CompliceAuthenticator extends AbstractFormLoginAuthenticator
         TokenInterface $token,
         string $providerKey
     ) : RedirectResponse{
-        return new RedirectResponse('index');
+        return new RedirectResponse(
+            $this->session->get('_security.main.target_path')
+        );
     }
 
     /**

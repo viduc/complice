@@ -16,9 +16,25 @@
 {% include 'layout/navigation.html.twig' %}
 {% block body %}
     <div class="row">
+        <div class="container">
+            <div class="col-lg-12">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        {% if menu_gauche.titre is defined %}
         <div class="col-lg-2">
             {% include 'layout/navigation-gauche.html.twig' %}
         </div>
+        {% endif %}
         <div class="col-lg-10 container">
             {% block contenu %}{% endblock %}
         </div>
@@ -32,6 +48,10 @@
     <script
         type="text/javascript"
         src="{{ asset('js/bootstrap.min.js') }}" >
+    </script>
+    <script
+        type="text/javascript"
+        src="{{ asset('js/multiselect.js') }}" >
     </script>
 {% endblock %}
 </body>

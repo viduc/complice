@@ -5,3 +5,7 @@ utilisateur:
 utilisateur_liste:
     path: /liste
     controller: App\Controller\UtilisateurController::index
+
+utilisateur_creer:
+    path: /creer
+    controller: App\Controller\UtilisateurController::creer

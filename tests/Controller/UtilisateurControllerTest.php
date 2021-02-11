@@ -25,4 +25,12 @@ class UtilisateurControllerTest extends TestCase
     {
     }
 
+    final public function genererLogin() : void
+    {
+
+        $reflector = new \ReflectionClass(UtilisateurController::class);
+        $methode = $reflector->getMethod('genererLogin');
+        $methode->setAccessible(true);
+    }
+
 }

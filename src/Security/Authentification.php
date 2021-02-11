@@ -7,6 +7,8 @@
 
 namespace App\Security;
 
+use App\Exception\CompliceException;
+
 class Authentification implements AuthentificationInterface
 {
     /**
@@ -31,5 +33,23 @@ class Authentification implements AuthentificationInterface
     final public function verifieLeMotDePasse(string $motDePasse, string $hash)
     : bool {
         return password_verify($motDePasse, $hash);
+    }
+
+
+    /**
+     * @return string
+     * @throws CompliceException
+     */
+    final public function creerUnMotDePasseAleatoire() : string
+    {
+        try {
+            return $this->crypterMotDePasse(md5(uniqid('', true)));
+        } catch (\Exception $e) {
+            throw new CompliceException(
+                'Une erreur s\'est produite lors de la génération du mot de
+                passe par défaut',
+                103
+            );
+        }
     }
 }
