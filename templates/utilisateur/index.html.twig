@@ -16,13 +16,23 @@
             </thead>
             <tbody>
             {% for user in users %}
-                <tr class="table-primary">
+                {% set color =  'success'%}
+                {% if user.civilite == 'Mme' %}
+                    {% set color = 'warning' %}
+                {% endif %}
+                <tr class="table-{{ color }}">
                     <th scope="row">{{ user.civilite }}</th>
                     <td>{{ user.username }}</td>
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.actif }}</td>
+                    <td>
+                        {% if user.actif %}
+                            <img src="{{ asset('images/switch-on.png') }}" alt="on" />
+                        {% else %}
+                            <img src="{{ asset('images/switch-off.png') }}" alt="off" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
