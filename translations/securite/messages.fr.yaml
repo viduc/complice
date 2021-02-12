@@ -10,7 +10,7 @@ securite:
     logout: Déconnexion
   password:
     invalid_message: Les mots de passe doivent être identiques
-    password1: Entrez votre nouveau mot de passe
+    password1: Entrez votre nouveau mot de passe (10 caractères minimum)
     password2: Confirmer votre mot de passe
     success: Votre mot de passe a bien été modifié
   token:

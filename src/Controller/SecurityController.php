@@ -119,12 +119,13 @@ class SecurityController extends AbstractController
     /**
      * Créé le formulaire pour le changement de mot de passe
      * @return FormInterface
+     * @codeCoverageIgnore
      */
     private function formChangerMotDePasse() : FormInterface
     {
         return $this->createFormBuilder()
              ->add('password', RepeatedType::class, [
-                 'constraints' => new Length(['min' => 3]),
+                 'constraints' => new Length(['min' => 10]),
                  'type' => PasswordType::class,
                  'invalid_message' => $this->translator->trans(
                      'securite.password.invalid_message'
