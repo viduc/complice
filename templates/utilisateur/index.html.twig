@@ -6,12 +6,13 @@
         <table class="table table-hover" id="datatable">
             <thead>
             <tr>
-                <th scope="col">Civilité</th>
-                <th scope="col">Login</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Prénom</th>
-                <th scope="col">Email</th>
-                <th scope="col">Actif</th>
+                <th scope="col">{% trans %}utilisateur.edit.civilite{% endtrans %}</th>
+                <th scope="col">{% trans %}utilisateur.edit.login{% endtrans %}</th>
+                <th scope="col">{% trans %}utilisateur.edit.nom{% endtrans %}</th>
+                <th scope="col">{% trans %}utilisateur.edit.prenom{% endtrans %}</th>
+                <th scope="col">{% trans %}utilisateur.edit.email{% endtrans %}</th>
+                <th scope="col">{% trans %}utilisateur.edit.actif{% endtrans %}</th>
+                <th scope="col">{% trans %}utilisateur.edit.edit{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
@@ -32,6 +33,11 @@
                         {% else %}
                             <img src="{{ asset('images/switch-off.png') }}" alt="off" />
                         {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('utilisateur_editer', {'id': user.id}) }}">
+                            <img src="{{ asset('images/edit.png') }}" alt="edit" />
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

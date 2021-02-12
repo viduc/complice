@@ -1,9 +1,12 @@
 utilisateur:
   titres: Users
   edit:
+    login: Login
     nom: Last Name
     prenom: First Name
     civilite: Civilities
     email: Email
     roles: Roles
     save: Save
+    actif: Active
+    edit: Edit

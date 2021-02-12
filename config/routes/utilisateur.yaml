@@ -9,3 +9,7 @@ utilisateur_liste:
 utilisateur_creer:
     path: /creer
     controller: App\Controller\UtilisateurController::creer
+
+utilisateur_editer:
+    path: /editer
+    controller: App\Controller\UtilisateurController::creer
