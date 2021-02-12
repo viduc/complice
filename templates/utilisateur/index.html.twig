@@ -1,7 +1,35 @@
 {% extends 'layout/complice.html.twig' %}
 
 {% block contenu %}
-{{ dump(users) }}
+<div class="row">
+    <div class="col-lg-11">
+        <table class="table table-hover" id="datatable">
+            <thead>
+            <tr>
+                <th scope="col">Civilité</th>
+                <th scope="col">Login</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actif</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="table-primary">
+                    <th scope="row">{{ user.civilite }}</th>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.actif }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock %}
 
 

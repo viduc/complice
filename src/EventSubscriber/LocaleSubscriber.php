@@ -7,9 +7,14 @@
 
 namespace App\EventSubscriber;
 
+use Symfony\Bridge\Twig\Extension\AssetExtension;
+use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
@@ -17,12 +22,21 @@ class LocaleSubscriber implements EventSubscriberInterface
     private string $defaultLocale;
 
     /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
      * LocaleSubscriber constructor.
      * @param string $defaultLocale
+     * @param Environment $twig
      * @codeCoverageIgnore
      */
-    public function __construct(string $defaultLocale = 'fr')
-    {
+    public function __construct(
+        Environment $twig,
+        string $defaultLocale = 'fr'
+    ) {
+        $this->twig = $twig;
         $this->defaultLocale = $defaultLocale;
     }
 
@@ -45,6 +59,11 @@ class LocaleSubscriber implements EventSubscriberInterface
                 $request->getSession()->get('_locale', $this->defaultLocale)
             );
         }
+        $locale = 'French';
+        if ($request->getLocale() === 'en') {
+            $locale = 'English';
+        }
+        $this->twig->addGlobal('locale', $locale);
     }
 
     /**

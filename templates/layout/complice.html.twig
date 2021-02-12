@@ -10,6 +10,12 @@
             type="text/css"
             media="screen"
         />
+        <link
+            rel="stylesheet"
+            href="{{ asset('css/dataTable.css') }}"
+            type="text/css"
+            media="screen"
+        />
     {% endblock %}
 </head>
 <body>
@@ -41,6 +47,9 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script>
+        var locale = "{{ locale }}"
+    </script>
     <script
         type="text/javascript"
         src="{{ asset('js/jquery.3.5.1.min.js') }}" >
@@ -51,7 +60,11 @@
     </script>
     <script
         type="text/javascript"
-        src="{{ asset('js/multiselect.js') }}" >
+        src="{{ asset('js/dataTable.js') }}" >
+    </script>
+    <script
+        type="text/javascript"
+        src="{{ asset('js/complice.js') }}" >
     </script>
 {% endblock %}
 </body>

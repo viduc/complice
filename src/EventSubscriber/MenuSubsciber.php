@@ -26,8 +26,8 @@ class MenuSubsciber implements EventSubscriberInterface
      * @param Environment $twig
      * @codeCoverageIgnore
      */
-    public function __construct( Environment $twig) {
-        $this->twig     = $twig;
+    public function __construct(Environment $twig) {
+        $this->twig = $twig;
     }
 
     /**
