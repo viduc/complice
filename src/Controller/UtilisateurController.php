@@ -25,13 +25,22 @@ class UtilisateurController extends AbstractController implements utilisateurInt
 {
     private EntityManagerInterface $entityManager;
     private Authentification $auth;
+    private TranslatorInterface $translator;
+    private array $roles;
 
     final public function __construct(
         EntityManagerInterface $em,
-        Authentification $authentification
+        Authentification $authentification,
+        TranslatorInterface $translator
     ) {
         $this->entityManager = $em;
         $this->auth = $authentification;
+        $this->translator = $translator;
+
+        $this->roles = array(
+            $this->translator->trans('roles.ROLE_USER') => 'ROLE_USER',
+            $this->translator->trans('roles.ROLE_ADMIN') => 'ROLE_ADMIN'
+        );
     }
     /**
      * @return Response
@@ -46,23 +55,22 @@ class UtilisateurController extends AbstractController implements utilisateurInt
         ]);
     }
 
-    final public function creer(
-        Request $request,
-        TranslatorInterface $translator
-    ) : Response {
+    /**
+     * Création d'un utilisateur
+     * @param Request $request
+     * @return Response
+     * @throws CompliceException
+     */
+    final public function creer(Request $request) : Response
+    {
         $user = new User();
-        $roles = array(
-            $translator->trans('roles.ROLE_USER') => 'ROLE_USER',
-            $translator->trans('roles.ROLE_ADMIN') => 'ROLE_ADMIN'
-        );
         $form = $this->createForm(
             UserType::class,
             $user,
-            array('transaltor' => $translator, 'roles' => $roles)
+            array('transaltor' => $this->translator, 'roles' => $this->roles)
         );
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->auth->creerUnMotDePasseAleatoire());
             $user->setCreeLe(new DateTime('NOW'));
@@ -76,6 +84,48 @@ class UtilisateurController extends AbstractController implements utilisateurInt
             'user' => $user,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    final public function editer(Request $request, int $id) : Response
+    {
+        $user = $this->entityManager->getRepository(User::class)->find($id);
+        if ($user !== null) {
+            $form = $this->createForm(
+                UserType::class,
+                $user,
+                array(
+                    'transaltor' => $this->translator,
+                    'roles' => $this->roles,
+                    'type' => 'editer'
+                )
+            );
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setRoles($request->get('user')['roles']);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('utilisateur.message.enregistrement.ok')
+                );
+            }
+            return $this->render('utilisateur/editer.html.twig', [
+                'user' => $user,
+                'form' => $form->createView()
+            ]);
+        }
+
+        $this->addFlash(
+            'danger',
+            $this->translator->trans('utilisateur.message.notfound')
+        );
+        return $this->redirectToRoute('utilisateur_liste');
     }
 
     /**

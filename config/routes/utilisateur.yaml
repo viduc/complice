@@ -11,5 +11,5 @@ utilisateur_creer:
     controller: App\Controller\UtilisateurController::creer
 
 utilisateur_editer:
-    path: /editer
-    controller: App\Controller\UtilisateurController::creer
+    path: /editer/{id}
+    controller: App\Controller\UtilisateurController::editer

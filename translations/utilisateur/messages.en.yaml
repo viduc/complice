@@ -10,3 +10,7 @@ utilisateur:
     save: Save
     actif: Active
     edit: Edit
+  erreur:
+    notfound: "User not found."
+    enregistrement:
+      ok: "User registration was successful"

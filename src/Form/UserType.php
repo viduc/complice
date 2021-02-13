@@ -9,6 +9,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -65,6 +66,13 @@ class UserType extends AbstractType
                 'label' => $options['transaltor']->trans('utilisateur.edit.save')
             ])
         ;
+        if ($options['type'] === 'editer') {
+            $builder
+                ->add('actif', CheckboxType::class, [
+                    'attr' => ['class' => 'custom-control-input'],
+                    'required' => false
+                ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -72,7 +80,8 @@ class UserType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'transaltor' => null,
-            'roles' => []
+            'roles' => [],
+            'type' => 'creer'
         ]);
     }
 }

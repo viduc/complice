@@ -10,3 +10,7 @@ utilisateur:
     save: Enregistrer
     actif: Actif
     edit: Editer
+  message:
+    notfound: "L'utilisateur n'existe pas."
+    enregistrement:
+      ok: "L'enregistrement de l'utilisateur a réussit"
