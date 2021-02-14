@@ -8,29 +8,74 @@
 namespace App\Tests\Controller;
 
 use App\Controller\UtilisateurController;
+use App\Entity\User;
 use App\Exception\CompliceException;
+use App\Security\AuthentificationInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Repository\RepositoryFactory;
+use Mockery;
+use \Mockery\Adapter\Phpunit\MockeryTestCase;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UtilisateurControllerTest extends TestCase
+class UtilisateurControllerTest extends MockeryTestCase
 {
     private UtilisateurController $utilisateur;
+    private EntityManagerInterface $em;
+    private AuthentificationInterface $auth;
+    private TranslatorInterface $translator;
+    private \ReflectionClass $reflector;
 
     final protected function setUp() : void
     {
         parent::setUp();
-        $this->utilisateur = new UtilisateurController();
+        $this->em = $this->createMock(EntityManagerInterface::class);
+        $this->auth = $this->createMock(AuthentificationInterface::class);
+        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->utilisateur = new UtilisateurController(
+            $this->em,
+            $this->auth,
+            $this->translator
+        );
+        $this->reflector = new \ReflectionClass(UtilisateurController::class);
     }
 
     final public function tearDown(): void
     {
     }
 
+    /**
+     * @test
+     * @throws \ReflectionException
+     */
     final public function genererLogin() : void
     {
 
-        $reflector = new \ReflectionClass(UtilisateurController::class);
-        $methode = $reflector->getMethod('genererLogin');
+        $methode = $this->reflector->getMethod('genererLogin');
         $methode->setAccessible(true);
+        $user = new User();
+        $user->setNom('test');
+        $user->setPrenom(('test'));
+        $repository = Mockery::mock('RepositoryFactory');
+        $repository->shouldReceive('findByUsername')->andReturn(null);
+        $this->em->method('getRepository')->willReturn($repository);
+        $test = $methode->invoke($this->utilisateur, $user);
+        self::assertInstanceOf(
+            User::class,
+            $test
+        );
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @test
+     */
+    final public function enleverCaracteresSpeciaux() : void
+    {
+        $methode = $this->reflector->getMethod('enleverCaracteresSpeciaux');
+        $methode->setAccessible(true);
+        $test = $methode->invoke($this->utilisateur, 'ssstildesss');
+        self::assertEquals('ssstildesss', $test);
     }
 
 }

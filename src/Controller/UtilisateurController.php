@@ -12,6 +12,7 @@ use App\Exception\CompliceException;
 use App\Form\UserType;
 use App\Interfaces\utilisateurInterface;
 use App\Security\Authentification;
+use App\Security\AuthentificationInterface;
 use App\Security\CompliceAuthenticator;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -24,13 +25,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UtilisateurController extends AbstractController implements utilisateurInterface
 {
     private EntityManagerInterface $entityManager;
-    private Authentification $auth;
+    private AuthentificationInterface $auth;
     private TranslatorInterface $translator;
     private array $roles;
 
+    /**
+     * UtilisateurController constructor.
+     * @param EntityManagerInterface $em
+     * @param AuthentificationInterface $authentification
+     * @param TranslatorInterface $translator
+     * @codeCoverageIgnore
+     */
     final public function __construct(
         EntityManagerInterface $em,
-        Authentification $authentification,
+        AuthentificationInterface $authentification,
         TranslatorInterface $translator
     ) {
         $this->entityManager = $em;
@@ -44,6 +52,7 @@ class UtilisateurController extends AbstractController implements utilisateurInt
     }
     /**
      * @return Response
+     * @codeCoverageIgnore
      */
     final public function index(): Response
     {
@@ -60,6 +69,7 @@ class UtilisateurController extends AbstractController implements utilisateurInt
      * @param Request $request
      * @return Response
      * @throws CompliceException
+     * @codeCoverageIgnore
      */
     final public function creer(Request $request) : Response
     {
@@ -90,6 +100,7 @@ class UtilisateurController extends AbstractController implements utilisateurInt
      * @param Request $request
      * @param int $id
      * @return Response
+     * @codeCoverageIgnore
      */
     final public function editer(Request $request, int $id) : Response
     {
@@ -112,7 +123,9 @@ class UtilisateurController extends AbstractController implements utilisateurInt
                 $this->entityManager->flush();
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('utilisateur.message.enregistrement.ok')
+                    $this->translator->trans(
+                        'utilisateur.message.enregistrement.ok'
+                    )
                 );
             }
             return $this->render('utilisateur/editer.html.twig', [
@@ -132,6 +145,7 @@ class UtilisateurController extends AbstractController implements utilisateurInt
      * @param User $user
      * @return User
      * @throws \Exception
+     * @test genererLogin()
      */
     private function genererLogin(User $user) : User
     {
@@ -159,6 +173,7 @@ class UtilisateurController extends AbstractController implements utilisateurInt
      * @param String $str
      * @param string $charset
      * @return string|string[]|null
+     * @test enleverCaracteresSpeciaux()
      */
     private function enleverCaracteresSpeciaux(
         string $str,
