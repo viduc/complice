@@ -9,13 +9,10 @@ namespace App\Tests\Controller;
 
 use App\Controller\UtilisateurController;
 use App\Entity\User;
-use App\Exception\CompliceException;
 use App\Security\AuthentificationInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Repository\RepositoryFactory;
 use Mockery;
 use \Mockery\Adapter\Phpunit\MockeryTestCase;
-use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UtilisateurControllerTest extends MockeryTestCase
